@@ -1,23 +1,23 @@
-# EX 5C Graph Coloring
+# EX 5D Flower Planting
 
 ## AIM:
 
-To write a Java program to determine whether N radio towers can be assigned at most M frequency channels such that no two adjacent towers share the same channel, using the **Graph Coloring (Backtracking)** approach.
+To write a Java program to assign one of **four flower types** to each garden such that **no two adjacent gardens have the same flower type**, using a greedy algorithm.
+A valid assignment is always guaranteed because no garden has more than 3 neighbours.
 
 ---
 
 ## Algorithm:
 
-1. Read inputs: number of towers **N**, number of channels **M**, and number of edges **E**.
-2. Build an adjacency list to represent the undirected graph of tower communication range.
-3. Maintain a `color[]` array of size `N` initialized to 0 (uncolored).
-4. Use a **recursive backtracking function**:
+1. Read the number of gardens **n** and number of paths **m**.
+2. Build an adjacency list to represent the bidirectional paths between gardens.
+3. Create an array `res[]` of size `n` to store the assigned flower types.
+4. For each garden:
 
-   * For each tower, try assigning a channel `1` to `M`.
-   * Before assigning, check using `isSafe()` that no adjacent tower has the same color.
-5. If assigning a color leads to a valid configuration for all towers → return **true**.
-6. If no color can be assigned for a tower → backtrack and try another color.
-7. If no assignment is possible → print **"NO"**, otherwise **"YES"**.
+   * Check all its neighbours and mark the flower types used by those neighbours.
+   * Assign the **smallest flower type (1 to 4)** that is not used by its neighbours.
+5. Print the resulting flower assignment.
+6. Since each garden has at most 3 neighbours, at least one of the four flower types will always be available.
 
 ---
 
@@ -25,63 +25,66 @@ To write a Java program to determine whether N radio towers can be assigned at m
 
 ```java
 /*
-Program to implement Graph Coloring
+Program to implement Flower Planting
 Developed by: MUKESH R
 Register Number: 212223240100
 */
 
 import java.util.*;
 
-public class RadioTowerChannelAssignment {
+public class GardenFlowerPlanner {
 
-    private static boolean isSafe(List<List<Integer>> graph, int node, int[] color, int c) {
-        for (int neighbor : graph.get(node)) {
-            if (color[neighbor] == c)
-                return false;
+    public static int[] assignFlowers(int n, int[][] paths) {
+        @SuppressWarnings("unchecked")
+        List<Integer>[] adj = new ArrayList[n];
+        for (int i = 0; i < n; i++) adj[i] = new ArrayList<>();
+
+        for (int[] p : paths) {
+            int u = p[0] - 1;
+            int v = p[1] - 1;
+            adj[u].add(v);
+            adj[v].add(u);
         }
-        return true;
-    }
 
-    public static boolean isColorable(List<List<Integer>> graph, int[] color, int node, int m, int n) {
-        if (node == n)
-            return true;
+        int[] res = new int[n];
 
-        for (int c = 1; c <= m; c++) {
-            if (isSafe(graph, node, color, c)) {
-                color[node] = c;
+        for (int i = 0; i < n; i++) {
+            boolean[] used = new boolean[5];
 
-                if (isColorable(graph, color, node + 1, m, n))
-                    return true;
+            for (int nei : adj[i]) {
+                if (res[nei] != 0)
+                    used[res[nei]] = true;
+            }
 
-                color[node] = 0;
+            for (int f = 1; f <= 4; f++) {
+                if (!used[f]) {
+                    res[i] = f;
+                    break;
+                }
             }
         }
-        return false;
+
+        return res;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
         int n = sc.nextInt();
         int m = sc.nextInt();
-        int e = sc.nextInt();
 
-        List<List<Integer>> graph = new ArrayList<>();
-        for (int i = 0; i < n; i++)
-            graph.add(new ArrayList<>());
-
-        for (int i = 0; i < e; i++) {
-            int u = sc.nextInt();
-            int v = sc.nextInt();
-            graph.get(u).add(v);
-            graph.get(v).add(u);
+        int[][] paths = new int[m][2];
+        for (int i = 0; i < m; i++) {
+            paths[i][0] = sc.nextInt();
+            paths[i][1] = sc.nextInt();
         }
 
-        int[] color = new int[n];
+        int[] result = assignFlowers(n, paths);
 
-        if (isColorable(graph, color, 0, m, n))
-            System.out.println("YES");
-        else
-            System.out.println("NO");
+        for (int flower : result) {
+            System.out.print(flower + " ");
+        }
+        System.out.println();
 
         sc.close();
     }
@@ -92,11 +95,12 @@ public class RadioTowerChannelAssignment {
 
 ## Output:
 
-<img width="931" height="549" alt="image" src="https://github.com/user-attachments/assets/fdced9d4-60e9-4db6-a69c-b2cbf53acb7d" />
-
+<img width="509" height="554" alt="image" src="https://github.com/user-attachments/assets/ec94ee3c-fe5f-4efc-9a20-134d5d094958" />
 
 ---
 
 ## Result:
 
-The program was successfully implemented using the **Graph Coloring Backtracking** method and the expected output was verified.
+The program was successfully implemented using a greedy flower assignment approach, and the expected output was verified.
+
+
