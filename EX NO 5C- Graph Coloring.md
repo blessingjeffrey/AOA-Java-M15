@@ -1,4 +1,5 @@
 # EX 5C Graph Coloring
+# DATE: 10/09/2026
 
 ## AIM:
 
@@ -24,11 +25,6 @@ To write a Java program to determine whether N radio towers can be assigned at m
 ## Program:
 
 ```java
-/*
-Program to implement Graph Coloring
-Developed by: MUKESH R
-Register Number: 212223240100
-*/
 
 import java.util.*;
 
