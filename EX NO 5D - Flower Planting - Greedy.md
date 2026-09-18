@@ -1,4 +1,5 @@
 # EX 5D Flower Planting
+# DATE: 10/09/2026
 
 ## AIM:
 
@@ -24,12 +25,6 @@ A valid assignment is always guaranteed because no garden has more than 3 neighb
 ## Program:
 
 ```java
-/*
-Program to implement Flower Planting
-Developed by: MUKESH R
-Register Number: 212223240100
-*/
-
 import java.util.*;
 
 public class GardenFlowerPlanner {
