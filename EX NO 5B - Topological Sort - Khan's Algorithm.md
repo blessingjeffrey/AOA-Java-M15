@@ -1,4 +1,5 @@
 # EX 5B Topological Sort – Kahn's Algorithm
+# DATE: 10/09/2026
 ## AIM:
 
 To write a Java program to find a valid order of task execution using **Topological Sorting (Kahn’s Algorithm)**.
@@ -26,11 +27,6 @@ The program should detect if a valid release schedule exists or if cyclic depend
 ## Program:
 
 ```java
-/*
-Program to implement Topological Sort
-Developed by: MUKESH R
-Register Number: 212223240100
-*/
 
 import java.util.*;
 
